@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "503385413749",
+    "project_id": "mibiblioteca-65bcc",
+    "storage_bucket": "mibiblioteca-65bcc.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:503385413749:android:ee92c72e48b018b7d3803c",
+        "android_client_info": {
+          "package_name": "com.maximilianofava.mibiblioteca"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA08l2FWfYIS2ZKe5Yj6DHDokHCEiy_uo4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
