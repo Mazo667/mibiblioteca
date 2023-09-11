@@ -42,8 +42,6 @@ class MiBiblioteca extends StatelessWidget {
 class BottomNavigationWidget extends StatefulWidget {
   const BottomNavigationWidget({Key? key}) : super(key: key);
 
-
-
   @override
   State<BottomNavigationWidget> createState() => _BottomNavigationWidgetState();
 }
@@ -56,6 +54,7 @@ class _BottomNavigationWidgetState extends State<BottomNavigationWidget> {
     CategoriesScreen(),
     BookShelfScreen(),
   ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -67,6 +66,7 @@ class _BottomNavigationWidgetState extends State<BottomNavigationWidget> {
           BottomNavigationBarItem(icon: Icon(Icons.book_rounded),label: "Mi Cuenta")
         ],
         currentIndex: _selectedIndex,
+        //Cuando hago click en algunos de los botones cambio el indice
         onTap: _onItemTapped,
       ),
       body: _sections[_selectedIndex],

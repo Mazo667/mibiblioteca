@@ -3,6 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mibiblioteca/model/book.dart';
 import 'package:mibiblioteca/state.dart';
 
+import '../utils.dart';
+
 class BookDetailScreen extends StatelessWidget {
   final Book _book;
   const BookDetailScreen(this._book, {Key? key}) : super(key: key);
@@ -78,7 +80,8 @@ class BookCoverWidget extends StatelessWidget {
           width: 230,
           margin: const EdgeInsets.only(top: 20, bottom: 20),
           decoration: BoxDecoration(boxShadow: [BoxShadow(color: Colors.grey.withOpacity(0.5),spreadRadius: 5,blurRadius: 10)]),
-          child: Image.asset(coverUrl)),
+          child: Image(image: getImageWidget(coverUrl)),
+    )
     );
   }
 }

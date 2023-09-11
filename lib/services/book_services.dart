@@ -1,6 +1,8 @@
 import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
 import 'package:mibiblioteca/model/book.dart';
+import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 
 class BooksService {
   //Creamos la referencia que es el path donde esta la coleccion y el documento
@@ -40,5 +42,37 @@ class BooksService {
       'summary': summary
     });
     return Future.value(result.id);
+  }
+
+  Future<String> uploadBookCover(String imagePath, String newBookId) async {
+    try{
+      //guardo el path en una variable
+      var newBookRef = 'books/$newBookId';
+      //Guardo el imagePath en un archivo
+      File image = File(imagePath);
+      //subo esa imagen firebase storage
+      var task = await firebase_storage.FirebaseStorage.instance.
+      ref(newBookRef).putFile(image);
+
+      debugPrint("Upload finalizado, path: ${task.ref}");
+
+      //Retorno la url de la imagen subida al firebaseStorage
+      return firebase_storage.FirebaseStorage.instance
+          .ref(newBookRef)
+          .getDownloadURL();
+    } on FirebaseException catch(e){
+      debugPrint(e.message);
+      rethrow;
+    }
+
+  }
+
+  Future<void> updateCoverBook(String newBookId, String imageUrl) async {
+    //obtengo la referencia del libro que quiero actualizar
+    var reference = FirebaseFirestore.instance.collection("books").doc(newBookId);
+    //con la referencia actualizo el campo
+    await reference.update({
+      'coverUrl': imageUrl,
+    });
   }
 }

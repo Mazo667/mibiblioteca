@@ -5,6 +5,7 @@ import 'package:mibiblioteca/book_detail/book_details_screen.dart';
 import 'package:mibiblioteca/model/book.dart';
 import 'package:mibiblioteca/services/book_services.dart';
 import 'package:mibiblioteca/state.dart';
+import 'package:mibiblioteca/utils.dart';
 
 class BookShelfScreen extends StatelessWidget {
   final List<Book> _books = const [];
@@ -79,6 +80,7 @@ class _BookCoverItemState extends State<BookCoverItem> {
 
   @override
   void initState() {
+    super.initState();
     _getBook(widget._bookId);
   }
 
@@ -88,6 +90,7 @@ class _BookCoverItemState extends State<BookCoverItem> {
       _book = book;
     });
   }
+
   @override
   Widget build(BuildContext context) {
     if(_book==null){
@@ -102,7 +105,8 @@ class _BookCoverItemState extends State<BookCoverItem> {
         },
         child: Ink.image(
             fit: BoxFit.cover,
-            image: AssetImage(_book!.coverUrl)));
+            image: getImageWidget(_book!.coverUrl))
+    );
   }
 
   void _openBookDetails(Book book, BuildContext context) {
@@ -111,4 +115,5 @@ class _BookCoverItemState extends State<BookCoverItem> {
     )
     );
   }
+
 }

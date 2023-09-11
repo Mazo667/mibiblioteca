@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mibiblioteca/book_detail/book_details_screen.dart';
 import 'package:mibiblioteca/model/book.dart';
 import 'package:mibiblioteca/services/book_services.dart';
+import 'package:mibiblioteca/utils.dart';
 
 
 
@@ -102,7 +103,7 @@ class ListItemBook extends StatelessWidget {
               children: [
                 Padding(
                   padding: const EdgeInsets.only(left: 5, right: 10),
-                  child: Image.asset(_book.coverUrl,width: 150,),
+                  child: Image(image: getImageWidget(_book.coverUrl)),
                 ),
                 Flexible(
                   child: Column(
