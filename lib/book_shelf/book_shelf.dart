@@ -8,7 +8,6 @@ import 'package:mibiblioteca/state.dart';
 import 'package:mibiblioteca/utils.dart';
 
 class BookShelfScreen extends StatelessWidget {
-  final List<Book> _books = const [];
 
   const BookShelfScreen({Key? key}) : super(key: key);
 
