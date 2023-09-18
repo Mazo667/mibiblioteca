@@ -1,6 +1,8 @@
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:mibiblioteca/book_shelf/book_shelf.dart';
 import 'package:mibiblioteca/categories/categories.dart';
 import 'package:mibiblioteca/home/home_screen.dart';
+import 'package:mibiblioteca/notifications/notifications.dart';
 import 'package:mibiblioteca/state.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -11,12 +13,12 @@ void main() async{
   WidgetsFlutterBinding.ensureInitialized();
   //Incializacion de firebase
   await Firebase.initializeApp();
+  //Inicio la app
   runApp(const MiBiblioteca());
 }
 
 class MiBiblioteca extends StatelessWidget {
   const MiBiblioteca({super.key});
-
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
@@ -39,6 +41,7 @@ class MiBiblioteca extends StatelessWidget {
 }
 
 
+
 class BottomNavigationWidget extends StatefulWidget {
   const BottomNavigationWidget({Key? key}) : super(key: key);
 
@@ -54,6 +57,13 @@ class _BottomNavigationWidgetState extends State<BottomNavigationWidget> {
     CategoriesScreen(),
     BookShelfScreen(),
   ];
+
+  @override
+  void initState() {
+    super.initState();
+    print("se ejecuto el init");
+    initNotifications(context);
+  }
 
   @override
   Widget build(BuildContext context) {
