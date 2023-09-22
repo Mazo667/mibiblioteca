@@ -65,7 +65,7 @@ class _BottomNavigationWidgetState extends State<BottomNavigationWidget> {
   void initState() {
     super.initState();
     print("se ejecuto el init");
-    initNotifications(context);
+    initNotifications(this.context);
   }
 
   @override
