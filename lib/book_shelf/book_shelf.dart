@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:mibiblioteca/add_book/add_book_screen.dart';
 import 'package:mibiblioteca/book_detail/book_details_screen.dart';
 import 'package:mibiblioteca/model/book.dart';
@@ -9,10 +10,35 @@ import 'package:mibiblioteca/utils.dart';
 
 class BookShelfScreen extends StatelessWidget {
 
-  const BookShelfScreen({Key? key}) : super(key: key);
+  InterstitialAd? _ad;
+
+  BookShelfScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    InterstitialAd.load(
+        adUnitId: "ca-app-pub-3940256099942544/1033173712", //id de prueba
+        request: AdRequest(),
+        adLoadCallback: InterstitialAdLoadCallback(
+            onAdLoaded: (ad){
+              print("Ad esta cargado");
+              _ad = ad;
+              _ad!.fullScreenContentCallback = FullScreenContentCallback(
+                //si el ad se cierra, seguimos nuestra navegacion a la siguiente pantalla
+                onAdDismissedFullScreenContent: (ad){
+                  _navigateToAddNewBookScreen(context);
+                  //si el ad ya se mostro, seguimos con la navegacion
+                }, onAdFailedToShowFullScreenContent: (ad,error){
+                print(error);
+                _navigateToAddNewBookScreen(context);
+              }
+              );},
+            //si surgio un error con el ad seguimos con la navegacion
+            onAdFailedToLoad: (error){
+              print(error);
+              _navigateToAddNewBookScreen(context);
+            })
+    );
     return BlocBuilder<BookshelfBloc,BookshelfState>(
         builder: (context, bookshelfState){
           //Declaro un widget que contenga si la lista esta vacia
@@ -26,7 +52,12 @@ class BookShelfScreen extends StatelessWidget {
             children: [
               Expanded(child: mainWidget),
               ElevatedButton(onPressed: () {
-                _navigateToAddNewBookScreen(context);
+                //pregunto si el ad cargo o no, si es nulo no cargo
+                if(_ad != null){
+                  _ad!.show();
+                }else{
+                  _navigateToAddNewBookScreen(context);
+                }
               }, child: const Text("Agregar nuevos libros")),
             ],
           );

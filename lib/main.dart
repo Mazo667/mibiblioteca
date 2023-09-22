@@ -1,4 +1,5 @@
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:mibiblioteca/book_shelf/book_shelf.dart';
 import 'package:mibiblioteca/categories/categories.dart';
 import 'package:mibiblioteca/home/home_screen.dart';
@@ -13,6 +14,8 @@ void main() async{
   WidgetsFlutterBinding.ensureInitialized();
   //Incializacion de firebase
   await Firebase.initializeApp();
+  //Inicializo google Ads
+  MobileAds.instance.initialize();
   //Inicio la app
   runApp(const MiBiblioteca());
 }
@@ -52,9 +55,9 @@ class BottomNavigationWidget extends StatefulWidget {
 class _BottomNavigationWidgetState extends State<BottomNavigationWidget> {
   int _selectedIndex = 0;
 
-  static const List<Widget> _sections = [
-    HomeScreen(),
-    CategoriesScreen(),
+  static final List<Widget> _sections = [
+    const HomeScreen(),
+    const CategoriesScreen(),
     BookShelfScreen(),
   ];
 

@@ -2,26 +2,50 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mibiblioteca/model/book.dart';
 import 'package:mibiblioteca/state.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 
 import '../utils.dart';
 
 class BookDetailScreen extends StatelessWidget {
   final Book _book;
-  const BookDetailScreen(this._book, {Key? key}) : super(key: key);
+  BookDetailScreen(this._book, {Key? key}) : super(key: key);
+  /* bannerAd recibe el tamaño, unitId para obtenerlo en la dashboard de AdMob,
+   listener para escuchar los ciclos de vida del ad y el request que le hace a los servidores de google */
+  final BannerAd bannerAd = BannerAd(
+      size: AdSize.banner,
+      adUnitId: "ca-app-pub-3940256099942544/6300978111",
+      listener: BannerAdListener(
+        onAdLoaded: (Ad ad) => print('ad Loaded'),
+        onAdFailedToLoad: (Ad ad,LoadAdError error){
+          ad.dispose();
+          print('Ad failed to load $error');
+        }
+      ),
+      request: AdRequest());
 
   @override
   Widget build(BuildContext context) {
+    //Llamamos a los servidores de google para cargar el Ad
+    bannerAd.load(); //en un statefull lo cargariamos en initState
     return Scaffold(
       appBar: AppBar(
         title: const Text("Detalle Libro"),
       ),
-      body: SingleChildScrollView(
-        child: Column(children: [
-          BookCoverWidget(_book.coverUrl),
-          BookInfoWidget(_book.title,_book.author,_book.description),
-          BookActionsWidget(_book.id)
+      body: Column(
+        children: [
+          SingleChildScrollView(
+            child: Column(children: [
+              BookCoverWidget(_book.coverUrl),
+              BookInfoWidget(_book.title,_book.author,_book.description),
+              BookActionsWidget(_book.id),
+            ],
+            ),
+          ),
+          Container(
+              width: bannerAd.size.width.toDouble(),
+              height: bannerAd.size.height.toDouble(),
+              child: AdWidget(ad: bannerAd)),
         ],
-        ),
       ),
     );
   }

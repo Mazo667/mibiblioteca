@@ -31,6 +31,8 @@ void initLocalNotifications(BuildContext context) async {
   FlutterLocalNotificationsPlugin notifications =
   FlutterLocalNotificationsPlugin();
 
+  notifications.resolvePlatformSpecificImplementation<
+      AndroidFlutterLocalNotificationsPlugin>()?.requestPermission();
 
   DarwinInitializationSettings iosSettings = DarwinInitializationSettings(
       onDidReceiveLocalNotification: (id, title, body, payload) {
